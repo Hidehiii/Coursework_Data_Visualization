@@ -1,6 +1,6 @@
 # 1. 导入数据
 data <- read.csv("data.csv", fileEncoding = "UTF-8")
-
+View(data)
 # 2. 选择相关的变量
 # 选择v2到v11的列进行分析，v1是年份，不参与分析
 selected_data <- data[, c("v1","v2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11")]
