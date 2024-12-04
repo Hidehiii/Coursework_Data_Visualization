@@ -86,3 +86,35 @@ cat("平均相对误差：", avg_relative_error, "\n")
 cat("均方误差（MSE）：", mse, "\n")
 cat("均根误差（RMSE）：", rmse, "\n")
 cat("均绝对误差（MAE）：", mae, "\n")
+#-----------------------------------------------------------基于线性回归的离群点检测---------------------------------
+
+library(car)
+
+# 2. 使用拟合的线性回归模型进行离群点检测
+# 使用 qqPlot 函数来检测离群点
+qqPlot(fit, 
+       main = "离群点检测 - QQ图", 
+       conf = 0.89)  # 设置置信区间为0.89
+# 查找第14行和第23行的年份
+data_clean$v1[c(14, 23)]
+# 计算回归模型的残差
+residuals <- fit$residuals
+
+# 将残差添加到数据框中
+data_clean$residuals <- residuals
+
+# 计算标准化残差（或学生化残差）
+std_residuals <- rstandard(fit)
+
+# 设定阈值
+threshold <- 2 
+
+# 找到超出阈值的离群点
+outliers <- which(abs(std_residuals) > threshold)
+
+# 显示离群点的年份和数值
+outlier_data <- data_clean[outliers, c("v1", "v11", "predicted_v11", "residuals")]
+
+# 输出离群点数据
+print(outlier_data)
+
