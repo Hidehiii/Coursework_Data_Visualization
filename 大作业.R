@@ -61,5 +61,28 @@ ggplot(data_clean, aes(x = v1)) +
   scale_x_continuous(breaks = seq(min(data_clean$v1), max(data_clean$v1), by = 1), 
                      labels = as.character(seq(min(data_clean$v1), max(data_clean$v1), by = 1))) +  # 设置x轴每年显示
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # 设置x轴标签倾斜，防止重叠
+#-----------------------------计算误差--------------------------------------
 
 
+# 7. 计算预测误差：相对误差、MSE、RMSE 和 MAE
+
+# 相对误差计算（每年）
+relative_errors <- (data_clean$v11 - data_clean$predicted_v11) / data_clean$v11
+
+# 计算相对误差的平均值
+avg_relative_error <- mean(relative_errors, na.rm = TRUE)
+
+# 均方误差（MSE）
+mse <- mean((data_clean$v11 - data_clean$predicted_v11)^2)
+
+# 均根误差（RMSE）
+rmse <- sqrt(mse)
+
+# 均绝对误差（MAE）
+mae <- mean(abs(data_clean$v11 - data_clean$predicted_v11))
+
+# 8. 输出误差计算结果
+cat("平均相对误差：", avg_relative_error, "\n")
+cat("均方误差（MSE）：", mse, "\n")
+cat("均根误差（RMSE）：", rmse, "\n")
+cat("均绝对误差（MAE）：", mae, "\n")
