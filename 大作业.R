@@ -126,6 +126,7 @@ for (i in 2:7) {
   lm=lm(data[,i]~year)##基于线性回归的各指标2024年数据预测
   data2024[i]=predict(lm,newdata = data.frame(year=2024))
 }
+data2024
 #-------------------------------对预测的2024年数据进行基于fisher线性判别法的预测------------------------------------
 data[24,]=data2024
 data[24,8]=predict(fit,newdata = data.frame(data[24,-8]))##对预测的2024年数据进行基于fisher线性判别法的预测
